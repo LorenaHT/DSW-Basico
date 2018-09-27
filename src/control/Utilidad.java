@@ -1,14 +1,17 @@
 package control;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Utilidad
@@ -31,6 +34,19 @@ public class Utilidad extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest peticion, HttpServletResponse respuesta)
 			throws ServletException, IOException {
+		HttpSession sesion = peticion.getSession();
+		ArrayList<Object> lista = new ArrayList<Object>();
+		if (sesion.getAttribute("lista") == null)
+			sesion.setAttribute("lista", lista);
+		if (sesion.getAttribute("usuario") == null)
+			sesion.setAttribute("usuario", "mauricio");
+		System.out.println("ID SESION : " + sesion.getId());
+		Cookie[] cookies = peticion.getCookies();
+		for (Cookie cookie : cookies) {
+			System.out.println(cookie.getName() + " : " + cookie.getValue());
+		}
+		this.getServletContext().getRequestDispatcher("/Servlet2").forward(peticion, respuesta);;
+		System.out.println("ESTOY EN UTILIDAD...");
 		// TODO Auto-generated method stub
 		String op1 = peticion.getParameter("a");
 		String op2 = peticion.getParameter("b");
@@ -43,6 +59,8 @@ public class Utilidad extends HttpServlet {
 		}
 		String paramConfig = this.getServletConfig().getInitParameter("nombre");
 		System.out.println(paramConfig);
+		String contextoConfig = this.getServletContext().getInitParameter("Pais");
+		System.out.println(contextoConfig);
 	}
 
 	@Override

@@ -36,6 +36,7 @@ public class Servlet2 extends HttpServlet {
 		} catch (NumberFormatException e) {
 			respuesta.getWriter().append(" Error de formato en operando");
 		}
+		System.out.println("ESTOY EN SERVLET2");
 		String contextoParam = this.getServletContext().getInitParameter("Pais");
 		System.out.println(contextoParam);
 	}
